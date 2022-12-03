@@ -1,17 +1,16 @@
-path =  r'./input.in'
-input_file = open(path, 'r')
-input_list = input_file.read().splitlines()
-sum = 0
+from read_input import *
+
+input_list = read_input('input_1.in')
+
+temp_sum = 0
 sum_list = []
 for entry in input_list:
     if entry == '':
-        sum_list.append(sum)
-        sum = 0
+        sum_list.append(temp_sum)
+        temp_sum = 0
     else:
-        sum = sum + int(entry)
+        temp_sum += int(entry)
 
 sum_list.sort(reverse=True)
 
-print(sum_list[0])
-
-print(sum_list[0]+sum_list[1]+sum_list[2])
+print(sum_list[0], sum(sum_list[:3]))

@@ -1,15 +1,33 @@
-path =  r'./input.in'
-input_file = open(path, 'r')
-input_list = input_file.read().splitlines()
+from read_input import *
+from enum import Enum
+
+input_list = read_input('input_2.in')
+
 sum = 0
 sum2 = 0
 
-score_dict = {'A X': 4, 'A Y': 8, 'A Z': 3, 'B X': 1, 'B Y': 5, 'B Z': 9, 'C X': 7, 'C Y': 2, 'C Z': 6}
-score_dict_2 = {'A X': 3, 'A Y': 4, 'A Z': 8, 'B X': 1, 'B Y': 5, 'B Z': 9, 'C X': 2, 'C Y': 6, 'C Z': 7}
+move_dict = {'A': 1, 'B': 2, 'C': 3, 'X': 1, 'Y': 2, 'Z': 3}
 
 
 for entry in input_list:
-    sum = sum + score_dict[entry]
-    sum2 = sum2 + score_dict_2[entry]
+    opponent = move_dict[entry[0]]
+    me = move_dict[entry[2]]
+    sum += me
+
+    if opponent == me:
+        sum += 3
+    if (opponent - me) % 3 == 2:
+        sum += 6
+
+    match me:
+        case 1:
+            sum2 += (opponent - 1 if opponent > 1 else 3)
+        case 2:
+            sum2 += 3 + opponent
+        case 3: 
+            sum2 += 6 + (opponent + 1 if opponent < 3 else 1)
+        case _:
+            print("uh oh!")
+ 
 
 print(sum, sum2)
